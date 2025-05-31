@@ -923,15 +923,6 @@ h1, h2, h3, h4, h5 {
   transform: translateY(0);
 } */
 
-/* Footer Styles */
-.footertext {
-  text-align: center;
-  padding: 2rem;
-  background-color: #000000;
-  color: rgb(255, 255, 255) !important;
-  /* margin-top: 4rem; */
-}
-
 /* what we do  */
 
 .whatFlex{
@@ -1289,3 +1280,58 @@ font-size: 12px;
   padding-right: 1rem;
   text-align: center;
 }
+
+@media (max-width: 600px) {
+.cube-controls button{
+padding: 10px;
+  font-size: 10px;
+}
+}
+
+/* Footer Styles */
+.footertext {
+      color: black;
+    margin: 1rem;
+      font-family: "DotGothic16", sans-serif;
+  /* text-align: center;
+  padding: 2rem;
+  background-color: #000000;
+  color: rgb(255, 255, 255) !important; */
+  /* margin-top: 4rem; */
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+   color: black;
+    margin: 1rem;
+    font-size: 14px;
+      font-family: "DotGothic16", sans-serif;
+  position: relative;
+  z-index: 10;
+}
+
+.footertext-left {
+  text-align: left;
+}
+
+.footertext-right {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: right;
+  transition: all 0.3s ease;
+}
+
+.arrow-up {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* Animate on hover */
+.footertext-right:hover .arrow-up {
+  transform: translateY(-5px);
+}
+
