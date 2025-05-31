@@ -31,41 +31,31 @@ Message: ${message}`;
   };
 
   return (
-    <section className="contact reveal" id="contact">
-      {/* <h3>Contact Us</h3> */}
-      <form ref={formRef}>
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
+   <section className="contact-section" id="contact">
+  <div className="form-card">
+    <h3>Let's Create Together</h3>
+    <form ref={formRef} onSubmit={handleMailTo}>
+      <div className="form-group">
+        <input type="text" placeholder="Your Name" name="name" required />
+        {/* <label>Your Name</label> */}
+      </div>
+      <div className="form-group">
+        <input type="email" placeholder="Your Email" name="email" required />
+        {/* <label>Your Email</label> */}
+      </div>
+      <div className="form-group phone-combo">
+        <input type="text" name="countryCode" defaultValue="+91" />
+        <input type="tel" name="phone" placeholder="Phone (optional)" />
+      </div>
+      <div className="form-group">
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        {/* <label>Your Message</label> */}
+      </div>
+      <button type="submit" className="btn-send">Send ✉️</button>
+    </form>
+  </div>
+</section>
 
-        <div className="phone-group">
-  <input
-    type="text"
-    name="countryCode"
-    placeholder="+91"
-    defaultValue="+91"
-    className="country-code-input"
-  />
-  <input
-    type="tel"
-    name="phone"
-    placeholder="Phone Number (optional)"
-    className="phone-number-input"
-  />
-</div>
-
-
-        <textarea
-          name="message"
-          placeholder="Your Message"
-          rows="5"
-          required
-        ></textarea>
-
-        <button type="submit" onClick={handleMailTo}>
-          Send Message
-        </button>
-      </form>
-    </section>
   );
 }
 

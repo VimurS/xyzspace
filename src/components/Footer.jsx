@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <footer>
+    <div className="footertext">
       © {new Date().getFullYear()} XYZ SPACE. All rights reserved.
-    </footer>
+    </div>
   );
 }
 
