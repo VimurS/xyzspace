@@ -271,7 +271,7 @@ h1, h2, h3, h4, h5 {
   }
 
   .hero {
-  padding:5rem 2rem 4rem 2rem;
+  padding:4rem 2rem 4rem 2rem;
 }
 
 }
@@ -352,12 +352,14 @@ h1, h2, h3, h4, h5 {
 
 /* Services Section Styles */
 
+/* Globe spacing and responsiveness */
 .globe-container {
   perspective: 1000px;
   width: 300px;
   height: 200px;
   margin: 0 auto;
   position: relative;
+  touch-action: pan-y; /* allows horizontal swipe */
 }
 
 .globe-rotation {
@@ -370,8 +372,9 @@ h1, h2, h3, h4, h5 {
 
 .globe-card {
   position: absolute;
-  width: 100%;
+  width: 90%;
   height: 100%;
+  left: 5%;
   background: #111;
   color: white;
   border-radius: 12px;
@@ -383,6 +386,7 @@ h1, h2, h3, h4, h5 {
   transform-style: preserve-3d;
 }
 
+/* Cube face positioning */
 .globe-card:nth-child(1) {
   transform: rotateY(0deg) translateZ(300px);
 }
@@ -396,29 +400,31 @@ h1, h2, h3, h4, h5 {
   transform: rotateY(270deg) translateZ(300px);
 }
 
-@media (max-width: 480px) {
-  .globe-container{
-    perspective: none;
+/* Swipe hint text */
+.swipe-hint {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #888;
+  font-style: italic;
+  animation: hintFade 1.5s ease-in-out infinite alternate;
+}
+
+.ProcessDesc{
+font-size: 14px;
+}
+
+@keyframes hintFade {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-.controls {
-  margin-top: 30px;
-    display: flex;
-    margin-top: 73px;
-    justify-content: center;
 
-}
-.controls button {
-  background: #222;
-  color: white;
-  padding: 10px 20px;
-  margin: 0 15px;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  border-radius: 6px;
-}
+
 /* .services {
   background-color: #222;
   padding: 4rem 2rem;
@@ -462,7 +468,7 @@ h1, h2, h3, h4, h5 {
 
 .section-title {
   font-size: 16rem; /* Default font size for large screens */
-  margin-bottom: 40px;
+  margin: 40px 0px 50px 0px;
   color: black;
 }
 
@@ -720,8 +726,8 @@ h1, h2, h3, h4, h5 {
 
 /* Contact Section Styles */
 .contact-section {
-    font-family: 'Unbounded', sans-serif;
-  padding: 4rem 2rem;
+  font-family: 'Unbounded', sans-serif;
+  padding: 8rem 2rem;
   background: black;
   display: flex;
   justify-content: center;
@@ -764,19 +770,22 @@ h1, h2, h3, h4, h5 {
   outline: none;
 }
 
-.form-group label {
-  position: absolute;
-  left: 1rem;
-  top: -0.75rem;
-  background: #1c1c1e;
-  padding: 0 0.25rem;
-  color: #aaa;
-  font-size: 0.85rem;
+.form-group textarea {
+  min-height: 150px; /* Increased height for longer messages */
+  resize: vertical;
 }
 
 .phone-combo {
   display: flex;
   gap: 0.5rem;
+}
+
+.phone-combo input[name="countryCode"] {
+  width: 20%;
+}
+
+.phone-combo input[name="phone"] {
+  width: 80%;
 }
 
 .btn-send {
@@ -794,6 +803,7 @@ h1, h2, h3, h4, h5 {
   transform: scale(1.05);
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
 }
+
 /* .contact {
   background: #7451e8;
   padding: 4rem 2rem;
@@ -838,7 +848,7 @@ h1, h2, h3, h4, h5 {
 }
 
 /* Optional: subtle shimmer on hover */
-.contact button:hover {
+/* .contact button:hover {
   background-position: right center;
 }
 
@@ -864,7 +874,7 @@ h1, h2, h3, h4, h5 {
   border-radius: 6px;
   font-size: 1rem;
   box-sizing: border-box;
-} */
+} */ */
 
 
 /* Larger screens - make it row */
@@ -1021,15 +1031,15 @@ h1, h2, h3, h4, h5 {
 }
 
 .whatFlex .dot {
-width: 6px;
-    height: 6px;
+width: 8px;
+    height: 8px;
     background-color: #000000;
     border-radius: 50%;
     animation: pulse 2s infinite;
 }
 
 .whatFlex h1 {
-font-size: 12px;
+font-size: 15px;
     color: #000000;
     flex: 1;
 }
@@ -1205,12 +1215,16 @@ font-size: 12px;
   pointer-events: none;
 }
 
+.servicesCanvas{
+  margin-top: 9rem;
+}
+
 /* Social media section */
 .social-cube-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5rem 0;
+  padding: 10rem 0;
   background-color: #000;
   color: #fff;
   font-family: 'Unbounded', sans-serif;
@@ -1314,8 +1328,8 @@ padding: 10px;
   justify-content: space-between;
   align-items: center;
    color: black;
-    margin: 1rem;
-    font-size: 14px;
+    margin: 1.4rem;
+    font-size: 16px;
       font-family: "DotGothic16", sans-serif;
   position: relative;
   z-index: 10;

@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useScrollReveal from "../hooks/useScrollReveal";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stars } from "@react-three/drei";
 
 function Services() {
   useScrollReveal();
@@ -20,13 +22,11 @@ function Services() {
       title: "Build",
       desc: "We bring your ideas to life. Whether it’s a product or a campaign, we launch it with precision and performance.",
     },
-     {
+    {
       title: "Scale",
       desc: "As your digital partner, we iterate, optimize, and grow with you — turning success into long-term transformation.",
     },
   ];
-
-   const [openIndex, setOpenIndex] = useState(null);
 
   const expertiseItems = [
     { title: "Digital Marketing", content: "SEO, SEM, social media strategy..." },
@@ -39,14 +39,14 @@ function Services() {
     { title: "Video Production", content: "Commercials, reels, explainers..." },
   ];
 
+  const [openIndex, setOpenIndex] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const globeRef = useRef(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
   const toggleItem = (index) => {
     setOpenIndex(openIndex === index ? null : index);
-  };
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const rotateLeft = () => {
-    setCurrentIndex((prev) => (prev - 1 + services.length) % services.length);
   };
 
   const rotateRight = () => {
@@ -62,51 +62,69 @@ function Services() {
     return () => clearInterval(interval); // cleanup
   }, []);
 
-  return (
-    <section className="services" id="services">
-      <h3 className="section-title">Services</h3>
-      
-       <div className="expertise whatFlex">
-      <span className="dot" />
-      <h1>Our Expertise</h1>
-      <img src=""></img>
-      <div className="expertise-list">
-        {expertiseItems.map((item, index) => (
-          <div key={index}>
-            <span
-              className="reveal expertise-item"
-              onClick={() => toggleItem(index)}
-            >
-              {item.title}
-            </span>
-            {openIndex === index && (
-              <div className="expertise-content">{item.content}</div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+  useEffect(() => {
+    const node = globeRef.current;
+    if (!node) return;
 
-      {/* <div className="expertise whatFlex">
-        <span className="dot" />
-        <h1>Our Expertise</h1>
-        <div className="expertise-list">
-          <span className="reveal">Digital Marketing</span>
-          <span className="reveal">Creative Direction</span>
-          <span className="reveal">Branding</span>
-          <span className="reveal">Product Development</span>
-          <span className="reveal">Web & App Development</span>
-          <span className="reveal">e-com services</span>
-          <span className="reveal">3D Design</span>
-          <span className="reveal">Video Production</span>
+    const handleTouchStart = (e) => {
+      touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+      touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+      const diff = touchStartX.current - touchEndX.current;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          setCurrentIndex((prev) => (prev + 1) % services.length);
+        } else {
+          setCurrentIndex((prev) => (prev - 1 + services.length) % services.length);
+        }
+      }
+    };
+
+    node.addEventListener("touchstart", handleTouchStart);
+    node.addEventListener("touchmove", handleTouchMove);
+    node.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      node.removeEventListener("touchstart", handleTouchStart);
+      node.removeEventListener("touchmove", handleTouchMove);
+      node.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
+  return (
+    <>
+      <section className="services" id="services">
+        <h3 className="section-title">Services</h3>
+
+        <div className="expertise whatFlex">
+          <span className="dot" />
+          <h1>Our Expertise</h1>
+          <div className="expertise-list">
+            {expertiseItems.map((item, index) => (
+              <div key={index}>
+                <span
+                  className="reveal expertise-item"
+                  onClick={() => toggleItem(index)}
+                >
+                  {item.title}
+                </span>
+                {openIndex === index && (
+                  <div className="expertise-content">{item.content}</div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div> */}
+      </section>
 
       <div className="whatFlex overlay-content">
         <span className="dot" />
         <h1>Our Process</h1>
-
-        {/* Bottom intro content */}
         <p className="intro-text">
           We craft bold, high performing brand experiences. Blending strategy,
           storytelling, and cutting-edge tech, we design campaigns that
@@ -116,7 +134,8 @@ function Services() {
         </p>
       </div>
 
-      <div className="globe-container ProcessFlex">
+      {/* 3D Rotating Cube Section */}
+      <div className="globe-container ProcessFlex" ref={globeRef}>
         <div
           className="globe-rotation"
           style={{ transform: `rotateY(${currentIndex * -90}deg)` }}
@@ -124,17 +143,21 @@ function Services() {
           {services.map((service, index) => (
             <div className="globe-card" key={index}>
               <h2>{service.title}</h2>
-              <p>{service.desc}</p>
+              <p className="ProcessDesc">{service.desc}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="controls">
-        <button onClick={rotateLeft}>←</button>
-        <button onClick={rotateRight}>→</button>
-      </div>
-    </section>
+       <Canvas className="canvas-overlay servicesCanvas">
+        <ambientLight intensity={0.5} />
+        <Stars radius={100} depth={50} count={5000} factor={4} />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+      </Canvas>
+
+      {/* Swipe instruction text */}
+      {/* <p className="swipe-hint">← Swipe →</p> */}
+    </>
   );
 }
 

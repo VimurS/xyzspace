@@ -7,7 +7,7 @@ function Portfolio() {
   const projects = [1, 2, 3]; // Simulating project data
 
   return (
-    <section className="portfolio reveal" id="portfolio">
+    <section className="portfolio " id="portfolio">
       <h3 className="work-section">Work</h3>
       <div className="project-list">
         {projects.map((id) => (

@@ -42,9 +42,9 @@ function Socialmedia() {
       </div>
 
       <div className="cube-controls">
-        <button onClick={() => rotate("x", -90)}>Top</button>
-        <button onClick={() => rotate("x", 90)}>Bottom</button>
         <button onClick={() => rotate("y", -90)}>Left</button>
+        <button onClick={() => rotate("x", -90)}>Up</button>
+        <button onClick={() => rotate("x", 90)}>Down</button>
         <button onClick={() => rotate("y", 90)}>Right</button>
       </div>
     </section>
